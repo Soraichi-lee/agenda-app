@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&family=Archivo:wght@400;500;600;700&family=Bungee&family=Press+Start+2P&family=DM+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Silkscreen', 'Pixelify Sans', monospace;
+  --font-bungee: 'Bungee', sans-serif;
+  --font-body: 'Pixelify Sans', sans-serif;
+  --font-mono: 'Pixelify Sans', monospace;
+  --font-pixel: 'Press Start 2P', monospace;
+
+  --color-ink: #171310;
+  --color-cream: #fdf3e3;
+  --color-paper: #fff9f0;
+  --color-orange: #f26522;
+  --color-orange-deep: #d64f13;
+  --color-yellow: #ffc93c;
+  --color-berry: #e0457b;
+  --color-teal: #1f9e8f;
+  --color-violet: #7c5cd6;
+  --color-sky: #3d8bd4;
+
+  /* Gaya game pixel: semua sudut jadi kotak */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  background-color: var(--color-cream);
+  /* Lantai ubin pixel ala peta game */
+  background-image:
+    linear-gradient(45deg, rgba(23, 19, 16, 0.045) 25%, transparent 25%, transparent 75%, rgba(23, 19, 16, 0.045) 75%),
+    linear-gradient(45deg, rgba(23, 19, 16, 0.045) 25%, transparent 25%, transparent 75%, rgba(23, 19, 16, 0.045) 75%);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Neo-brutalist utility helpers */
+/* Bingkai panel game pixel: border tebal + bevel terang/gelap + bayangan keras */
+@utility card-brutal {
+  border: 4px solid var(--color-ink);
+  box-shadow:
+    inset -4px -4px 0 0 rgba(0, 0, 0, 0.12),
+    inset 4px 4px 0 0 rgba(255, 255, 255, 0.55),
+    6px 6px 0 0 var(--color-ink);
+}
+
+@utility card-brutal-sm {
+  border: 3px solid var(--color-ink);
+  box-shadow:
+    inset -3px -3px 0 0 rgba(0, 0, 0, 0.12),
+    inset 3px 3px 0 0 rgba(255, 255, 255, 0.5),
+    3px 3px 0 0 var(--color-ink);
+}
+
+/* Semua bentuk bulat jadi kotak pixel */
+@layer utilities {
+  .rounded-full,
+  .rounded-b-full,
+  .rounded-t-full {
+    border-radius: 0 !important;
+  }
+}
+
+/* Tombol terasa seperti tombol game: tekan = turun */
+button:not(:disabled):active {
+  transform: translate(2px, 2px);
+}
+
+/* Judul ala game */
+.font-display {
+  letter-spacing: 0 !important;
+  text-transform: uppercase;
+}
+
+::selection {
+  background: var(--color-yellow);
+  color: var(--color-ink);
+}
+
+/* Hide the page-level scrollbar so it doesn't eat into right-side padding */
+html, body {
+  scrollbar-width: none;
+  overflow-x: hidden;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Thin auto-hiding scrollbar for interior scrollable elements */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+*:hover,
+*:focus-within {
+  scrollbar-color: rgba(23, 19, 16, 0.35) transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 0;
+}
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(23, 19, 16, 0.3);
+}
+
+/* Focus Quest (game) animations */
+@keyframes hero-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+@keyframes hero-attack { 0%,100% { transform: translateX(0) } 40% { transform: translateX(18px) rotate(8deg) } }
+@keyframes monster-hit { 0%,100% { transform: translateX(0); filter: none } 45% { transform: translateX(6px); filter: brightness(1.8) } }
+@keyframes float-dmg { 0% { opacity: 0; transform: translateY(0) } 20% { opacity: 1 } 100% { opacity: 0; transform: translateY(-28px) } }
+@keyframes flicker { 0%,100% { transform: scale(1) } 50% { transform: scale(1.12) } }
+.anim-bob { animation: hero-bob 1.6s ease-in-out infinite }
+.anim-attack { animation: hero-attack 1s ease-in-out infinite }
+.anim-hit { animation: monster-hit 1s ease-in-out infinite }
+.anim-dmg { animation: float-dmg 1s ease-out infinite }
+.anim-flicker { animation: flicker 0.8s ease-in-out infinite }
+.pixel-frame { border: 4px solid var(--color-ink); box-shadow: inset -4px -4px 0 0 rgba(0,0,0,.25), inset 4px 4px 0 0 rgba(255,255,255,.18), 5px 5px 0 0 var(--color-ink); }
+@keyframes hammer-swing { 0%,100% { transform: rotate(-35deg) } 45% { transform: rotate(25deg) } 55% { transform: rotate(25deg) } }
+@keyframes spark { 0%,40% { opacity: 0; transform: translate(0,0) scale(.6) } 50% { opacity: 1 } 100% { opacity: 0; transform: translate(var(--sx), -18px) scale(1) } }
+.anim-hammer { animation: hammer-swing 0.9s ease-in-out infinite; transform-box: view-box; transform-origin: 13px 14px; }
+.anim-spark { animation: spark 0.9s ease-out infinite }
+
+/* Sprite gambar pahlawan (Raja Iblis): melayang, sayap mengepak, aura sihir merah */
+.hero-img-wrap { display: inline-block; position: relative }
+.hero-img-anim { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; transform-origin: 50% 100% }
+.idle-demon { transform-origin: 50% 60%; animation: demon-hover 2.4s ease-in-out infinite, demon-aura 1.6s ease-in-out infinite }
+@keyframes demon-hover {
+  0%, 100% { transform: scale(1.25, 1.25) translateY(0) }
+  25% { transform: scale(1.29, 1.22) translateY(-3%) }
+  50% { transform: scale(1.25, 1.25) translateY(-6%) }
+  75% { transform: scale(1.29, 1.22) translateY(-3%) }
+}
+@keyframes demon-aura {
+  0%, 100% { filter: drop-shadow(0 0 1px rgba(220, 20, 40, .5)) }
+  50% { filter: drop-shadow(0 0 6px rgba(255, 30, 50, .9)) brightness(1.08) }
+}
+@media (prefers-reduced-motion: reduce) { .hero-img-anim { animation: none } }
+
+/* Serangan Raja Iblis (siklus 1 detik): ancang-ancang, sayap membentang, lempar bola sihir darah */
+@keyframes demon-attack {
+  0%, 100% { transform: translate(0, 0) scale(1) }
+  20% { transform: translate(-6px, -4px) scale(0.95, 1.05); filter: brightness(0.9) }
+  35% { transform: translate(14px, -10px) scale(1.12, 1); filter: drop-shadow(0 0 8px #ff1e32) brightness(1.2) }
+  55% { transform: translate(8px, -6px) scale(1.05) }
+}
+@keyframes demon-orb {
+  0%, 30% { left: 26%; opacity: 0; transform: scale(.4) }
+  35% { opacity: 1; transform: scale(1) }
+  60% { left: 72%; opacity: 1; transform: scale(1.2) }
+  62%, 100% { left: 72%; opacity: 0; transform: scale(.4) }
+}
+@keyframes demon-burst {
+  0%, 58% { opacity: 0; transform: scale(.2) }
+  65% { opacity: 1; transform: scale(1) }
+  85%, 100% { opacity: 0; transform: scale(1.6) }
+}
+@keyframes monster-hit-demon {
+  0%, 58%, 100% { transform: translateX(0); filter: none }
+  64% { transform: translateX(8px) rotate(4deg); filter: brightness(1.6) sepia(1) hue-rotate(-50deg) saturate(5) }
+  75% { transform: translateX(-3px); filter: none }
+}
+.anim-demon-attack { animation: demon-attack 1s ease-in-out infinite }
+.anim-hit-demon { animation: monster-hit-demon 1s ease-in-out infinite }
+.demon-orb {
+  width: 16px; height: 16px; background: #ff2a3c; border: 3px solid #2a0008;
+  box-shadow: 0 0 0 3px #ff8a94 inset, 0 0 14px 4px rgba(255, 30, 50, .8), -10px 0 0 -2px rgba(255,40,60,.6), -18px 0 0 -4px rgba(255,40,60,.35);
+  animation: demon-orb 1s linear infinite;
+}
+.demon-burst {
+  width: 56px; height: 56px; transform-origin: center;
+  background:
+    linear-gradient(#ff2a3c, #ff2a3c) center / 100% 8px no-repeat,
+    linear-gradient(#ff2a3c, #ff2a3c) center / 8px 100% no-repeat,
+    radial-gradient(circle, rgba(255,200,205,.9) 0 20%, rgba(255,30,50,.7) 21% 40%, transparent 41%);
+  animation: demon-burst 1s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) { .anim-demon-attack, .anim-hit-demon, .demon-orb, .demon-burst { animation: none; opacity: 0 } .anim-hit-demon { opacity: 1 } }
+
+/* Monster quest: diam bernapas, dan animasi terkena serangan (pukulan mendarat di 40% siklus 1 detik) */
+@keyframes monster-idle { 0%, 100% { transform: scale(1, 1) } 50% { transform: scale(1.03, .97) translateY(1px) } }
+.monster-idle { animation: monster-idle 1.4s ease-in-out infinite; transform-origin: 50% 100% }
+/* Goblin: terpental ke belakang, gepeng, lalu memantul */
+@keyframes hurt-goblin {
+  0%, 36%, 100% { transform: translate(0, 0) scale(1) rotate(0) }
+  42% { transform: translate(12px, 0) scale(1.15, .8) rotate(8deg) }
+  52% { transform: translate(6px, -8px) scale(.92, 1.1) rotate(-4deg) }
+  64% { transform: translate(2px, 0) scale(1.04, .96) }
+}
+/* Iblis merah: tersentak ke atas, sayap mengerut, bergetar */
+@keyframes hurt-dragon {
+  0%, 36%, 100% { transform: translate(0, 0) scale(1) }
+  42% { transform: translate(10px, -6px) scale(.85, 1.08) }
+  47% { transform: translate(4px, -6px) scale(.9, 1.05) }
+  52% { transform: translate(9px, -4px) scale(.88, 1.06) }
+  62% { transform: translate(3px, 0) scale(1.06, .95) }
+}
+/* Serigala: kepala terdorong, tubuh terguling ke belakang, terhuyung */
+@keyframes hurt-wolf {
+  0%, 36%, 100% { transform: translate(0, 0) rotate(0) }
+  42% { transform: translate(14px, -2px) rotate(14deg) }
+  52% { transform: translate(8px, 0) rotate(-6deg) }
+  62% { transform: translate(3px, 0) rotate(3deg) }
+}
+/* Kilatan putih-merah saat terkena */
+@keyframes hurt-flash {
+  0%, 38%, 100% { filter: none }
+  41% { filter: brightness(3) saturate(0) }
+  46% { filter: brightness(1.4) sepia(1) hue-rotate(-50deg) saturate(6) }
+  54% { filter: none }
+}
+.hurt-goblin, .hurt-dragon, .hurt-wolf { transform-origin: 50% 100% }
+.hurt-goblin { animation: hurt-goblin 1s ease-out infinite }
+.hurt-dragon { animation: hurt-dragon 1s ease-out infinite }
+.hurt-wolf { animation: hurt-wolf 1s ease-out infinite }
+.hurt-flash { animation: hurt-flash 1s linear infinite }
+/* Serangan Raja Iblis mendarat lebih lambat (bola sihir), geser waktu pukulan */
+.hurt-demon-sync, .hurt-demon-sync .hurt-flash { animation-delay: .22s }
+@media (prefers-reduced-motion: reduce) { .monster-idle, .hurt-goblin, .hurt-dragon, .hurt-wolf, .hurt-flash { animation: none } }
+
+/* Arena hutan malam Focus Timer */
+@keyframes scene-twinkle { 0%, 100% { opacity: 1 } 50% { opacity: .25 } }
+@keyframes scene-firefly { 0%, 100% { opacity: 0; transform: translate(0, 0) } 30% { opacity: 1 } 60% { opacity: .9; transform: translate(3px, -4px) } }
+@keyframes scene-cloud { 0%, 100% { transform: translateX(0) } 50% { transform: translateX(8px) } }
+.scene-twinkle { animation: scene-twinkle 2.4s steps(3) infinite }
+.scene-firefly { animation: scene-firefly 3s ease-in-out infinite; transform-box: fill-box }
+.scene-cloud { animation: scene-cloud 12s steps(8) infinite }
+.wood-panel {
+  background: #3a2618; border: 4px solid #1a0f08;
+  box-shadow: inset 0 0 0 3px #8a5a32, inset 0 0 0 6px #5b3a20, inset 0 -9px 0 3px rgba(0,0,0,.25), 4px 4px 0 0 var(--color-ink);
+}
+.rivet { position: absolute; width: 6px; height: 6px; background: #c9893f; box-shadow: inset -2px -2px 0 #6b3f17, 0 0 0 1px #1a0f08 }
+.metal-frame {
+  background: #1d1a24; border: 3px solid #14111a;
+  box-shadow: inset 0 0 0 2px #77707f, inset 0 0 0 3px #3a3542, 3px 3px 0 0 var(--color-ink);
+}
+@media (prefers-reduced-motion: reduce) { .scene-twinkle, .scene-firefly, .scene-cloud { animation: none } }
+
+/* ===== Pahlawan: animasi diam (idle) ===== */
+/* Penyihir: melayang pelan + aura kristal biru */
+@keyframes idle-wizard { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-4%) } }
+@keyframes glow-blue { 0%, 100% { filter: drop-shadow(0 0 1px rgba(80,170,255,.4)) } 50% { filter: drop-shadow(0 0 6px rgba(80,190,255,.9)) } }
+.idle-wizard { animation: idle-wizard 2.2s ease-in-out infinite, glow-blue 1.8s ease-in-out infinite }
+/* Pendekar pedang: napas berat berzirah (squash halus) + kilau baja */
+@keyframes idle-swordsman { 0%, 100% { transform: scale(1, 1) } 50% { transform: scale(1.03, .97) } }
+@keyframes glint { 0%, 80%, 100% { filter: none } 88% { filter: brightness(1.35) drop-shadow(0 0 4px #fff3b0) } }
+.idle-swordsman { animation: idle-swordsman 1.8s ease-in-out infinite, glint 3s linear infinite }
+/* Ahli bela diri: kuda-kuda memantul cepat + aura api */
+@keyframes idle-fighter { 0%, 100% { transform: translateY(0) scale(1, 1) } 50% { transform: translateY(-3%) scale(.98, 1.02) } }
+@keyframes glow-fire { 0%, 100% { filter: drop-shadow(0 0 1px rgba(255,120,30,.4)) } 50% { filter: drop-shadow(0 0 5px rgba(255,130,30,.9)) } }
+.idle-fighter { animation: idle-fighter .7s ease-in-out infinite, glow-fire 1.4s ease-in-out infinite }
+/* Pemanah: bergoyang waspada, jubah tertiup angin */
+@keyframes idle-archer { 0%, 100% { transform: rotate(0) translateX(0) } 50% { transform: rotate(-2deg) translateX(-1%) } }
+.idle-archer { animation: idle-archer 2.6s ease-in-out infinite }
+
+/* ===== Pahlawan: animasi serangan (siklus 1 detik, pukulan mendarat ~40%) ===== */
+/* Penyihir: angkat tongkat, condong maju saat melepas bola sihir */
+@keyframes atk-wizard { 0%, 100% { transform: translate(0) rotate(0) } 15% { transform: translate(-4px, -4px) rotate(-6deg) } 28% { transform: translate(8px, -2px) rotate(6deg); filter: brightness(1.3) } 50% { transform: translate(2px) rotate(0) } }
+/* Pendekar pedang: maju menerjang lalu kembali */
+@keyframes atk-swordsman { 0%, 100% { transform: translateX(0) } 15% { transform: translateX(-8px) } 36% { transform: translateX(var(--dash, 120px)) rotate(6deg) } 46% { transform: translateX(var(--dash, 120px)) rotate(-4deg) } 70% { transform: translateX(0) } }
+/* Ahli bela diri: lompat-terjang dan pukulan */
+@keyframes atk-fighter { 0%, 100% { transform: translate(0) } 12% { transform: translate(-6px, 2px) scale(1.05, .95) } 30% { transform: translate(calc(var(--dash, 120px) * .5), -18px) } 38% { transform: translate(var(--dash, 120px), 0) scale(1.08, .94) } 48% { transform: translate(var(--dash, 120px), 0) } 72% { transform: translate(0) } }
+/* Pemanah: tarik busur (mundur sedikit), lepaskan, hentakan balik */
+@keyframes atk-archer { 0%, 100% { transform: translateX(0) } 20% { transform: translateX(-6px) scale(.97, 1.02) } 26% { transform: translateX(4px) } 34% { transform: translateX(-2px) } 50% { transform: translateX(0) } }
+.atk-wizard { animation: atk-wizard 1s ease-in-out infinite }
+.atk-swordsman { animation: atk-swordsman 1s ease-in-out infinite; --dash: 34vw }
+.atk-fighter { animation: atk-fighter 1s ease-in-out infinite; --dash: 34vw }
+.atk-archer { animation: atk-archer 1s ease-in-out infinite }
+@media (min-width: 560px) { .atk-swordsman, .atk-fighter { --dash: 180px } }
+
+/* Efek serangan */
+@keyframes fx-fly { 0%, 24% { left: 26%; opacity: 0 } 27% { opacity: 1 } 40% { left: 72%; opacity: 1 } 42%, 100% { left: 72%; opacity: 0 } }
+@keyframes fx-pop { 0%, 38% { opacity: 0; transform: scale(.3) rotate(0) } 44% { opacity: 1; transform: scale(1) rotate(10deg) } 60%, 100% { opacity: 0; transform: scale(1.5) rotate(20deg) } }
+.fx-bolt { width: 14px; height: 14px; background: #7fd4ff; border: 3px solid #0d2a5c; box-shadow: 0 0 0 3px #e6f7ff inset, 0 0 14px 4px rgba(80,190,255,.85), -10px 0 0 -2px rgba(120,200,255,.6), -18px 0 0 -4px rgba(120,200,255,.35); animation: fx-fly 1s linear infinite }
+.fx-arrow { width: 34px; height: 4px; background: linear-gradient(90deg, #e9e2d0 0 6px, #7a4a22 6px calc(100% - 8px), #c9ccd4 calc(100% - 8px)); box-shadow: 0 0 0 1px #1a0f08; animation: fx-fly 1s cubic-bezier(.2,.6,.4,1) infinite }
+.fx-slash { width: 64px; height: 64px; border-radius: 50%; border: 6px solid transparent; border-top-color: #fff; border-right-color: #dfe8ff; filter: drop-shadow(0 0 6px #cfe0ff); animation: fx-pop 1s ease-out infinite }
+.fx-fire { width: 60px; height: 60px; background: radial-gradient(circle, #fff3b0 0 18%, #ffb02e 19% 38%, #ff5a1f 39% 55%, transparent 56%); animation: fx-pop 1s ease-out infinite }
+.fx-sparkle { width: 56px; height: 56px; background: linear-gradient(#bfe9ff, #bfe9ff) center / 100% 6px no-repeat, linear-gradient(#bfe9ff, #bfe9ff) center / 6px 100% no-repeat, radial-gradient(circle, rgba(255,255,255,.9) 0 18%, rgba(80,190,255,.6) 19% 38%, transparent 39%); animation: fx-pop 1s ease-out infinite }
+@media (prefers-reduced-motion: reduce) {
+  .idle-wizard, .idle-swordsman, .idle-fighter, .idle-archer, .atk-wizard, .atk-swordsman, .atk-fighter, .atk-archer { animation: none }
+  .fx-bolt, .fx-arrow, .fx-slash, .fx-fire, .fx-sparkle { display: none }
+}
+
+/* Api unggun (fase istirahat): nyala berkedip, cahaya hangat berdenyut, bara beterbangan */
+.campfire { position: absolute; width: 96px; height: 96px }
+.campfire > span:last-child { position: relative; z-index: 1 }
+@keyframes campfire-flame {
+  0%, 100% { transform: scale(1, 1) skewX(0); filter: brightness(1) drop-shadow(0 0 4px rgba(255,140,40,.6)) }
+  25% { transform: scale(1.01, 1.04) skewX(-1.5deg); filter: brightness(1.12) drop-shadow(0 0 8px rgba(255,150,40,.8)) }
+  50% { transform: scale(.995, .98) skewX(1deg); filter: brightness(.95) drop-shadow(0 0 5px rgba(255,120,30,.6)) }
+  75% { transform: scale(1.01, 1.03) skewX(1.5deg); filter: brightness(1.08) drop-shadow(0 0 9px rgba(255,160,50,.85)) }
+}
+.campfire-flame { transform-origin: 50% 100%; animation: campfire-flame .9s steps(6) infinite }
+@keyframes campfire-glow { 0%, 100% { opacity: .55; transform: translateX(-50%) scale(1) } 50% { opacity: .85; transform: translateX(-50%) scale(1.12) } }
+.campfire-glow {
+  position: absolute; left: 50%; bottom: -14px; width: 190px; height: 110px; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 70%, rgba(255,170,60,.55), rgba(255,110,30,.22) 45%, transparent 70%);
+  animation: campfire-glow 1.6s ease-in-out infinite;
+}
+@keyframes campfire-ember {
+  0% { opacity: 0; transform: translate(0, 0) }
+  15% { opacity: 1 }
+  100% { opacity: 0; transform: translate(10px, -70px) }
+}
+.campfire-ember { position: absolute; z-index: 2; bottom: 55%; width: 3px; height: 3px; background: #ffd25a; box-shadow: 0 0 4px #ff8a1f; animation: campfire-ember 2.1s ease-out infinite }
+.campfire-ember:nth-of-type(even) { background: #ff7a1f; animation-duration: 2.6s }
+@media (prefers-reduced-motion: reduce) { .campfire-flame, .campfire-glow { animation: none } .campfire-ember { display: none } }

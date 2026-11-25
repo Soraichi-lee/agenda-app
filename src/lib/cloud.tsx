@@ -72,7 +72,20 @@ export function CloudProvider({ children }: { children: ReactNode }) {
       supabase.from('profiles').select('*').eq('id', userId).maybeSingle(),
     ])
     setData(Object.fromEntries((state.data ?? []).map((r) => [r.key as string, r.value])))
-    setProfile((prof.data as Profile | null) ?? null)
+    let profileRow = (prof.data as Profile | null) ?? null
+    if (!profileRow) {
+      // Akun lama / trigger belum aktif: buat baris profil sendiri supaya tidak terjebak di layar login.
+      const { data: { user: authUser } } = await supabase.auth.getUser()
+      const meta = (authUser?.user_metadata ?? {}) as Record<string, unknown>
+      const name = String(meta.name ?? meta.full_name ?? authUser?.email?.split('@')[0] ?? 'Pengguna')
+      const { error: insertError } = await supabase.from('profiles').insert({ id: userId, name })
+      if (insertError) console.error('Gagal membuat profil:', insertError)
+      else {
+        const again = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
+        profileRow = (again.data as Profile | null) ?? null
+      }
+    }
+    setProfile(profileRow)
     setVersion((v) => v + 1)
     setReady(true)
   }, [userId])

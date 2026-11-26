@@ -1,4 +1,6 @@
 {
+  "title": "Agenda",
+  "language": "id",
   "description": "Effortlessly manage your academic schedule with color-coded time-blocking, earn rewards for daily tasks, and receive proactive reminders for classes and deadlines.",
   "robots": {
     "index": false

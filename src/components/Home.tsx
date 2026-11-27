@@ -44,22 +44,8 @@ const dayInfo = (off: number) => {
   return { off, dow: DOW[d.getDay()], date: d.getDate(), mon: MONTHS[d.getMonth()].slice(0, 3), month: d.getMonth(), year: d.getFullYear() }
 }
 
-const INITIAL_SCHEDULE: Block[] = [
-  { id: 'b1', day: 0, title: 'Kalkulus II', room: 'Ruang A-201', start: '07:30', end: '09:00', color: 'teal', kind: 'kelas' },
-  { id: 'b2', day: 0, title: 'Pemrograman Web', room: 'Lab Komputer 3', start: '09:30', end: '11:30', color: 'sky', kind: 'kelas' },
-  { id: 'b3', day: 0, title: 'Basis Data', room: 'Ruang B-104', start: '11:00', end: '12:30', color: 'violet', kind: 'kelas' },
-  { id: 'b4', day: 0, title: 'Kerjakan Mockup UI', room: 'Tugas mandiri', start: '13:00', end: '14:30', color: 'orange', kind: 'tugas' },
-  { id: 'b5', day: 0, title: 'Struktur Data', room: 'Ruang A-108', start: '15:00', end: '16:30', color: 'berry', kind: 'kelas' },
-  { id: 'b6', day: 0, title: 'Belajar Kuis SD', room: 'Perpustakaan', start: '19:00', end: '20:30', color: 'yellow', kind: 'belajar' },
-  { id: 'b7', day: 1, title: 'Struktur Data', room: 'Ruang A-108', start: '08:00', end: '09:30', color: 'berry', kind: 'kelas' },
-  { id: 'b8', day: 1, title: 'Kuis Struktur Data', room: 'Ruang A-108', start: '09:30', end: '10:30', color: 'orange', kind: 'tugas' },
-  { id: 'b9', day: 1, title: 'Jaringan Komputer', room: 'Lab Jaringan', start: '13:00', end: '15:00', color: 'sky', kind: 'kelas' },
-  { id: 'b10', day: 2, title: 'Kalkulus II', room: 'Ruang A-201', start: '07:30', end: '09:00', color: 'teal', kind: 'kelas' },
-  { id: 'b11', day: 2, title: 'Kelompok UI', room: 'Kafetaria', start: '15:00', end: '17:00', color: 'violet', kind: 'belajar' },
-  { id: 'b12', day: 3, title: 'Bimbingan skripsi', room: 'Ruang Dosen', start: '13:00', end: '14:00', color: 'berry', kind: 'kelas' },
-  { id: 'b13', day: 4, title: 'Kerja proyek Web', room: 'Rumah', start: '10:00', end: '12:30', color: 'orange', kind: 'tugas' },
-  { id: 'b14', day: 6, title: 'Review mingguan', room: 'Perpustakaan', start: '19:00', end: '20:00', color: 'yellow', kind: 'belajar' },
-]
+// Pengguna baru mulai dengan jadwal kosong.
+const INITIAL_SCHEDULE: Block[] = []
 
 const DAY_START = toMin('00:00')
 const DAY_END = toMin('24:00')
@@ -326,7 +312,7 @@ export default function Home({
 
   const earned = useMemo(() => tasks.filter((t) => t.done).reduce((s, t) => s + t.points, 0), [tasks])
   const doneCount = tasks.filter((t) => t.done).length
-  const pct = Math.round((doneCount / tasks.length) * 100)
+  const pct = tasks.length ? Math.round((doneCount / tasks.length) * 100) : 0
 
   const { placed, laneCount, conflict } = useMemo(() => layoutBlocks(daySchedule), [daySchedule])
   const conflictPairs = Math.ceil(conflict.size / 2)

@@ -15,12 +15,8 @@ import { usePersistentState } from './lib/usePersistentState'
 import { useCloud } from './lib/cloud'
 import { buyWithMoney } from './lib/payment'
 
-const INITIAL_TASKS: Task[] = [
-  { id: 't1', label: 'Kumpulkan laporan Basis Data', sub: 'Tenggat 23.59', points: 5, done: false },
-  { id: 't2', label: 'Baca Bab 4 — Kalkulus II', sub: 'Persiapan kuis', points: 5, done: true },
-  { id: 't3', label: 'Kerjakan mockup UI', sub: 'Proyek kelompok', points: 5, done: false },
-  { id: 't4', label: 'Olahraga 30 menit', sub: 'Kebiasaan harian', points: 5, done: false },
-]
+// Pengguna baru mulai dari kosong: tidak ada tugas contoh.
+const INITIAL_TASKS: Task[] = []
 
 type View = 'home' | 'jadwal' | 'fokus' | 'store' | 'analytics'
 const TABS: { id: View; label: string; Icon: React.FC<{ size?: number }> }[] = [
@@ -47,8 +43,8 @@ export default function App() {
 
   const [view, setView] = useState<View>('home')
   const [tasks, setTasks] = usePersistentState<Task[]>('tasks', INITIAL_TASKS)
-  const [points, setPoints] = usePersistentState('points', 315)
-  const [freezes, setFreezes] = usePersistentState('freezes', 1)
+  const [points, setPoints] = usePersistentState('points', 0)
+  const [freezes, setFreezes] = usePersistentState('freezes', 0)
   const [doubleActive, setDoubleActive] = usePersistentState('doubleActive', false)
   const [ownedThemes, setOwnedThemes] = usePersistentState<string[]>('ownedThemes', ['classic'])
   const [activeTheme, setActiveTheme] = usePersistentState('activeTheme', 'classic')
@@ -59,7 +55,7 @@ export default function App() {
   const [focusSessions, setFocusSessions] = usePersistentState(`focusSessions:${today}`, 0)
   const [focusMinutes, setFocusMinutes] = usePersistentState(`focusMinutes:${today}`, 0)
   const premium = cloud.premium // diisi server setelah pembayaran lunas
-  const [streak, setStreak] = usePersistentState('streak', 12)
+  const [streak, setStreak] = usePersistentState('streak', 0)
   const [lastStreakDate, setLastStreakDate] = usePersistentState('lastStreakDate', '')
   const [dailyTaskPoints, setDailyTaskPoints] = usePersistentState('dailyTaskPoints', { date: '', earned: 0 })
 
